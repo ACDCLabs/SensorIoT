@@ -1,0 +1,23 @@
+{
+  "author": {
+    "name": "Norbert Danneberg",
+    "email": "info@ecloud-technologies.com",
+    "url": "http://www.ecloud-technologies.com"
+  },
+  "name": "ArduinoServer",
+  "description": "a very simple node.js server to connect to an arduino and get data from it",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "main": "main.js",
+  "dependencies": {
+    "express": "~4.13.3",
+    "serialport": "*",
+    "mysql": "~2.9.0",
+    "node-mysql": "~0.4.2",
+    "body-parser": "~1.0.1"
+  }
+
+}
