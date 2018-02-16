@@ -1,0 +1,40 @@
+<div class="jumbotron" style="background:#2c2c2c!important">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="stopwatch">{{stopWatch | date:'mm:ss'}}</div>
+      </div>
+      <div class="col-md-8">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-1">
+              <button class="form-control stopwatchButton" (click)="startRun()">Start</button>
+            </div>
+            <div class="form-group col-md-1">
+              <button class="form-control stopwatchButton" (click)="stopRun()">Stop</button>
+            </div>
+            <div class="form-group col-md-10">
+              <label for="description">Beschreibung</label>
+              <input type="text" class="form-control" id="runDescription" placeholder="Testlauf">
+              <small id="runDescriptionHelp" class="form-text text-muted">Kurze Beschreibung zu den aufgenommenen Daten.</small>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <tempGauge [gaugeTemp]="pressure | number: '2.1-1'"> </tempGauge>
+      <p class="text-center"> Flaschendruck </p>
+    </div>
+    <div class="col-md-8">
+      <app-history-chart [historyChartData]="pressureValues"> </app-history-chart>
+    </div>
+  </div>
+  <alert type="danger">
+    <strong>Oh snap!</strong> Change a few things up and try submitting again.
+  </alert>
+</div>

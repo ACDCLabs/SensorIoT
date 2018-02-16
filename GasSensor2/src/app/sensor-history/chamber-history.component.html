@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="col-md-1">
+    <a class="fa fa-2x my-align-center fa-chevron-left"></a>
+  </div>
+  <div class="col-md-9">
+    <app-history-chart [historyChartData]="tempHistory"> </app-history-chart>
+  </div>
+  <div class="col-md-1 ">
+    <a class="fa fa-2x my-align-center fa-chevron-right"></a>
+  </div>
+  <div class="col-md-1 ">
+    <div class="my-selector">
+      <ul>
+        <!--li class="fa fa-th-list"></li-->
+        <li *ngFor="let sensordescr of sensorList" (click)="onClickSensorNum(sensordescr.index)">
+          <p>{{sensordescr.description}} </p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <form>
+        <input name="text_input" (ngModel)="startDate" class="form-control" rows="3" placeholder="No Text">
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-1">
+  </div>
+  <div class="col-md-9">
+    <p>Range: {{startDate}} - {{endDate}}</p>
+  </div>
+  <div class="col-md-1">
+  </div>
+</div>
+<!--
+<div class="row">
+  <div class="col-md-12">
+    <table>
+      <tr>
+        <th> time </th> <th> SensorNum </th> <th> Temp </th>
+      </tr>
+      <tr *ngFor="let sensor of sensors">
+        <td>{{sensor.time}}</td> <td>{{sensor.num}}</td> <td>{{sensor.temp}}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+-->

@@ -1,0 +1,8 @@
+.heatmap {
+  border: 1px solid #c0c0c0;
+}
+
+.SVGYAxis {
+  stroke: #c0c0c0;
+  stroke-width:2;
+}

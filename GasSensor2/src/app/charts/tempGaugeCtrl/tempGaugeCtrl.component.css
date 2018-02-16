@@ -1,0 +1,33 @@
+#ControllerPlus {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 145px;
+  top: 150px;
+}
+#ControllerMinus {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: 55px;
+  top: 150px;
+}
+
+#setTemperature {
+  position: absolute;
+  height: auto;
+  width: auto;
+  left: 95px;
+  top: 155px;
+  font-size: 15pt;
+}
+.gauge-size {
+  height: 200px;
+  width: 200px;
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: block;
+  position: relative;
+}

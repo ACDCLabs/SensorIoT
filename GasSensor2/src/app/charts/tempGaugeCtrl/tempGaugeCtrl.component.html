@@ -1,0 +1,9 @@
+<div class="container gauge-size">
+<div>
+  <ngx-gauge [type]="gaugeType" [value]="gaugeTemp | number: '2.1-1'" [foregroundColor]="calcForegroundColor(gaugeTemp)" [label]="gaugeLabel" [append]="gaugeAppendText" [min]="gaugeMin" [max]="gaugeMax" [cap]="round" [thick]=25 [duration]=1>
+  </ngx-gauge>
+</div>
+  <img src="./assets/img/GaugeControlPlus.png" (click)="gaugeControllerIncrease()" id="ControllerPlus">
+  <div id="setTemperature"> {{setTemperature}}°C </div>
+  <img src="./assets/img/GaugeControlMinus.png" (click)="gaugeControllerDecrease()" id="ControllerMinus">
+</div>
