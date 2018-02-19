@@ -36,7 +36,7 @@ export class SensorHistoryComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("HistoryComponent ngInit");
+    // console.log("HistoryComponent ngInit");
     let today = new Date().valueOf();
     let backInMillis = 60 * 60 * 1000;
     this.startDate = new Date(today - backInMillis);
@@ -70,5 +70,9 @@ export class SensorHistoryComponent implements OnInit {
 
   private buildChartArray(sensorData: Sensor[]): Array<any> {
     return sensorData.map((data) => { return [new Date(data['time']).valueOf(), data['pressure']]; });
+  }
+
+  private clacRunStatistics(): void {
+    
   }
 }
