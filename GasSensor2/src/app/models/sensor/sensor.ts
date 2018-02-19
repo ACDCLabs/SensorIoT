@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sensor',
@@ -9,7 +9,10 @@ export class Sensor  {
 
     time: Date;
     num: number;
-    value: number;
+    pressure: number;
+    runNumber: number;
+    runDescription: string;
+    message: string;
 
   constructor() { }
 }

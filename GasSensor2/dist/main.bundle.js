@@ -147,14 +147,18 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sensor_history_sensor_history_component__ = __webpack_require__("../../../../../src/app/sensor-history/sensor-history.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__charts_history_chart_history_chart_component__ = __webpack_require__("../../../../../src/app/charts/history-chart/history-chart.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__models_sensor_sensor__ = __webpack_require__("../../../../../src/app/models/sensor/sensor.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__models_sensor_descriptor_sensor_descriptor__ = __webpack_require__("../../../../../src/app/models/sensor-descriptor/sensor-descriptor.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__clock_service__ = __webpack_require__("../../../../../src/app/clock.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__models_run_run__ = __webpack_require__("../../../../../src/app/models/run/run.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__models_sensor_descriptor_sensor_descriptor__ = __webpack_require__("../../../../../src/app/models/sensor-descriptor/sensor-descriptor.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__clock_service__ = __webpack_require__("../../../../../src/app/clock.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -200,7 +204,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_18__sensor_history_sensor_history_component__["a" /* SensorHistoryComponent */],
             __WEBPACK_IMPORTED_MODULE_19__charts_history_chart_history_chart_component__["a" /* HistoryChartComponent */],
             __WEBPACK_IMPORTED_MODULE_20__models_sensor_sensor__["a" /* Sensor */],
-            __WEBPACK_IMPORTED_MODULE_21__models_sensor_descriptor_sensor_descriptor__["a" /* SensorDescriptor */]
+            __WEBPACK_IMPORTED_MODULE_22__models_sensor_descriptor_sensor_descriptor__["a" /* SensorDescriptor */],
+            __WEBPACK_IMPORTED_MODULE_21__models_run_run__["a" /* Run */]
             // SensorList
         ],
         imports: [
@@ -210,11 +215,12 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_15_ngx_bootstrap__["b" /* CollapseModule */].forRoot(),
             __WEBPACK_IMPORTED_MODULE_6_ngx_gauge__["a" /* NgxGaugeModule */],
             __WEBPACK_IMPORTED_MODULE_7_angular_highcharts__["b" /* ChartModule */],
-            __WEBPACK_IMPORTED_MODULE_14__app_routing_module__["a" /* AppRoutingModule */]
+            __WEBPACK_IMPORTED_MODULE_14__app_routing_module__["a" /* AppRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_24__angular_forms__["a" /* FormsModule */]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_5__backendCloudService_service__["a" /* BackendCloudService */],
-            __WEBPACK_IMPORTED_MODULE_22__clock_service__["a" /* ClockService */],
+            __WEBPACK_IMPORTED_MODULE_23__clock_service__["a" /* ClockService */],
             __WEBPACK_IMPORTED_MODULE_4__particleCloudService_service__["a" /* ParticleCloudService */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
@@ -262,14 +268,14 @@ var BackendCloudService = (function () {
         // console.log(window.location.hostname);
     }
     ;
-    BackendCloudService.prototype.getHistoricSensorValues = function (startDate, endDate, sensorNumber) {
+    BackendCloudService.prototype.getHistoricSensorValues = function (startDate, endDate, runNumber) {
         //let startDate = new Date('2017-12-20');
         //let endDate = new Date('2017-12-25');
         var myfullurl = this.baseUrl + '/sensorvalues';
         var htmlBody = {
             start: this.toMySQLDateTimeString(startDate),
             end: this.toMySQLDateTimeString(endDate),
-            num: sensorNumber
+            runNumber: runNumber
         };
         // console.log(startDate);
         // console.log(myfullurl, htmlBody);
@@ -281,13 +287,25 @@ var BackendCloudService = (function () {
         var myfullurl = this.baseUrl + '/sensorvalue';
         var htmlBody = {
             num: sensor.num,
-            pressure: sensor.value,
+            pressure: sensor.pressure,
             runNumber: runNumber,
             runDescription: runDescription
         };
         // console.log(startDate);
         // console.log(myfullurl, htmlBody);
         return this.http.post(myfullurl, htmlBody)
+            .map(function (response) { return response.json(); })
+            .map(function (json) { return json["data"]; });
+    };
+    BackendCloudService.prototype.getRunList = function () {
+        var myfullurl = this.baseUrl + '/runs';
+        return this.http.get(myfullurl)
+            .map(function (response) { return response.json(); })
+            .map(function (json) { return json["data"]; });
+    };
+    BackendCloudService.prototype.getLastRunNumber = function () {
+        var myfullurl = this.baseUrl + '/lastrunnumber';
+        return this.http.get(myfullurl)
             .map(function (response) { return response.json(); })
             .map(function (json) { return json["data"]; });
     };
@@ -1142,6 +1160,65 @@ ClockService = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/models/run/run.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/models/run/run.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  {{run}}\n</p>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/models/run/run.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Run; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var Run = (function () {
+    function Run() {
+    }
+    return Run;
+}());
+Run = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-run',
+        template: __webpack_require__("../../../../../src/app/models/run/run.html"),
+        styles: [__webpack_require__("../../../../../src/app/models/run/run.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], Run);
+
+//# sourceMappingURL=run.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/models/sensor-descriptor/sensor-descriptor.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1299,7 +1376,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"./assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <!-- a class=\"nav-link\" routerLink=\"/gaugeCtrl\" routerLinkActive=\"active\"> Gauge </a-->\n    <a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a>\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <!--a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a-->\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"./assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <!-- a class=\"nav-link\" routerLink=\"/gaugeCtrl\" routerLinkActive=\"active\"> Gauge </a-->\n    <!-- a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a-->\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1578,7 +1655,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 33px;\n}\n", ""]);
+exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 33px;\n}\n\n\n.recodingIconPaused {\n  font-size: 25pt;\n  margin-top: 27px;\n  margin-left: 10px;\n  color: gray\n}\n\n.recodingIconRec {\n  font-size: 25pt;\n  margin-top: 27px;\n  margin-left: 10px;\n  color: red\n}\n", ""]);
 
 // exports
 
@@ -1591,7 +1668,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-dashboard/sensor-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c!important\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-8\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-10\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"pressure | number: '2.1-1'\"> </tempGauge>\n      <p class=\"text-center\"> Flaschendruck </p>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\"> </app-history-chart>\n    </div>\n  </div>\n  <alert type=\"danger\">\n    <strong>Oh snap!</strong> Change a few things up and try submitting again.\n  </alert>\n</div>\n"
+module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c!important\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-8\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-play\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-8\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.description\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.1-1'\"> </tempGauge>\n      <p class=\"text-center\"> Flaschendruck </p>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1607,6 +1684,7 @@ module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c!important\
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_sensor_sensor__ = __webpack_require__("../../../../../src/app/models/sensor/sensor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__models_sensor_list_sensor_list__ = __webpack_require__("../../../../../src/app/models/sensor-list/sensor-list.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__clock_service__ = __webpack_require__("../../../../../src/app/clock.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__models_run_run__ = __webpack_require__("../../../../../src/app/models/run/run.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1623,6 +1701,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SensorDashboardComponent = (function () {
     function SensorDashboardComponent(particleCloudService, backendCloudService, clockService) {
         this.particleCloudService = particleCloudService;
@@ -1630,20 +1709,25 @@ var SensorDashboardComponent = (function () {
         this.clockService = clockService;
         this.sensors = [];
         this.sensorList = __WEBPACK_IMPORTED_MODULE_5__models_sensor_list_sensor_list__["a" /* SensorList */];
+        // private lastRunNumber: number =0;
         this.maxArrayLength = 5;
         this.dataIsRecording = false;
         this.sensor = new __WEBPACK_IMPORTED_MODULE_4__models_sensor_sensor__["a" /* Sensor */];
+        this.run = new __WEBPACK_IMPORTED_MODULE_7__models_run_run__["a" /* Run */];
         //  this.pressureValues = new Array;
     }
     SensorDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.particleCloudService.readAnalogValue()
             .subscribe(function (value) {
-            _this.sensor.value = _this.particleCloudService.adcValueToPressure(value["result"]);
+            _this.sensor.pressure = _this.particleCloudService.adcValueToPressure(value["result"]);
         });
-        this.pressureValues = [[new Date().valueOf(), this.sensor.value]];
+        this.backendCloudService.getLastRunNumber().subscribe(function (num) {
+            _this.run.runnumber = num + 1;
+        });
+        this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
         // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-        // setInterval(() => { this.createRandomData(); }, 1000 );
+        setInterval(function () { _this.createRandomData(); }, 1000);
         this.clockService.createStopWatch().subscribe(function (stopWatchMillis) { return _this.stopWatch = new Date(stopWatchMillis); });
         this.clockService.startStopWatch();
         this.pollAnalogValues();
@@ -1651,7 +1735,13 @@ var SensorDashboardComponent = (function () {
     SensorDashboardComponent.prototype.createRandomData = function () {
         // array.push() does not work since angular does not detetct the change in the Array
         // we need to thange the reference of the array
-        this.pressureValues = this.pressureValues.concat([[new Date().valueOf(), Math.random() * 100]]);
+        this.sensor.pressure = Math.random() * 2;
+        this.sensor.num = 1;
+        this.pressureValues = this.pressureValues.concat([[new Date().valueOf(), this.sensor.pressure]]);
+        if (this.dataIsRecording)
+            this.backendCloudService.storeSensorValue(this.sensor, this.run.runnumber, this.run.rundescription).subscribe();
+        if (this.pressureValues.length > this.maxArrayLength)
+            this.pressureValues.shift();
     };
     ;
     SensorDashboardComponent.prototype.startRun = function () {
@@ -1674,14 +1764,14 @@ var SensorDashboardComponent = (function () {
         return __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["a" /* Observable */].interval(time)
             .switchMap(function () { return _this.particleCloudService.readAnalogValue(); })
             .subscribe(function (value) {
-            _this.sensor.value = _this.particleCloudService.adcValueToPressure(value["result"]);
-            _this.pressure = _this.sensor.value;
+            _this.sensor.pressure = _this.particleCloudService.adcValueToPressure(value["result"]);
             _this.sensor.num = 1;
             _this.sensor.time = new Date();
-            _this.backendCloudService.storeSensorValue(_this.sensor, 1, "MyMessage").subscribe();
+            if (_this.dataIsRecording)
+                _this.backendCloudService.storeSensorValue(_this.sensor, _this.run.runnumber, _this.run.rundescription).subscribe();
             if (_this.pressureValues.length > _this.maxArrayLength)
                 _this.pressureValues.shift();
-            _this.pressureValues = _this.pressureValues.concat([[_this.sensor.time.valueOf(), _this.sensor.value]]);
+            _this.pressureValues = _this.pressureValues.concat([[_this.sensor.time.valueOf(), _this.sensor.pressure]]);
             // this.setValue(this.sensor.value);
             // console.log("values", this.pressureValues);
         });
@@ -1716,7 +1806,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "a.fa:hover {\n  color: #94CAFF;\n  -webkit-transform: scale(1.3);\n}\n\na.fa {\n  -webkit-transition: all ease 0.2s;\n}\n\n.my-align-center {\n  position: relative;\n  top: 50%;\n  left: 50%;\n  height: 30%;\n  width: 50%;\n  margin: -15% 0 0 -25%;\n}\n\n.my-selector\n{\n    font-weight: normal;\n    text-align: left;\n}\n.my-selector li\n{\n    -webkit-transition: all ease 0.2s;\n    padding-bottom: 0px;\n    margin-bottom: 0px;\n    margin-top: 0px;\n    margin-left: 10px;\n    line-height: 1em;\n    text-align: left;\n}\n\n.my-selector ul\n{\n    padding-bottom: 0px;\n    padding-left: 0px;\n    margin-bottom: 0px;\n    margin-top: 10px;\n    margin-left: 20%;\n\n}\n\n.my-selector li:hover {\n    color: #94CAFF;\n    /*font-size: 150%; */\n    /* -webkit-transform: scale(1.3);*/\n}\n", ""]);
 
 // exports
 
@@ -1729,7 +1819,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-history/sensor-history.component.html":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <h3> Augewählter run : {{run.runnumber}} </h3>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <app-history-chart [historyChartData]=\"tempHistory\"> </app-history-chart>\n    </div>\n    <div class=\"col-md-3 \">\n      <div class=\"my-selector\">\n        <ul>\n          <li *ngFor=\"let run of runs\" (click)=\"onClickSensorNum(run.runnumber)\">\n            {{run.runnumber}} {{run.rundescription}}\n          </li>\n        </ul>\n      </div>\n    </div>\n  </div>\n</div>\n<!--\n  <div class=\"row\">\n    <div class=\"col-md-1\">\n    </div>\n    <div class=\"col-md-9\">\n      <p>Range: {{startDate}} - {{endDate}}</p>\n    </div>\n    <div class=\"col-md-1\">\n    </div>\n  </div>\n</div>\n-->\n"
 
 /***/ }),
 
@@ -1740,6 +1830,8 @@ module.exports = ""
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SensorHistoryComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__models_sensor_list_sensor_list__ = __webpack_require__("../../../../../src/app/models/sensor-list/sensor-list.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_run_run__ = __webpack_require__("../../../../../src/app/models/run/run.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__backendCloudService_service__ = __webpack_require__("../../../../../src/app/backendCloudService.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1751,42 +1843,65 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
 var SensorHistoryComponent = (function () {
-    function SensorHistoryComponent() {
-        this.startDate = new Date();
-        this.endDate = new Date();
+    function SensorHistoryComponent(backendCloudService) {
+        this.backendCloudService = backendCloudService;
         this.sensors = [];
         this.sensorList = __WEBPACK_IMPORTED_MODULE_1__models_sensor_list_sensor_list__["a" /* SensorList */];
         // private test: Sensor ;
         // private testarray: Sensor[] =[{time: this.startDate, num: 1, temp: 2}];
         this.tempHistory = [this.startDate, 1];
+        this.run = new __WEBPACK_IMPORTED_MODULE_2__models_run_run__["a" /* Run */];
     }
     SensorHistoryComponent.prototype.ngOnInit = function () {
+        var _this = this;
         console.log("HistoryComponent ngInit");
-        this.updateChart(this.startDate, this.endDate, 1);
-        this.startDate = this.endDate;
+        var today = new Date().valueOf();
+        var backInMillis = 60 * 60 * 1000;
+        this.startDate = new Date(today - backInMillis);
+        this.endDate = new Date();
+        // console.log(this.startDate);
+        this.backendCloudService.getRunList().subscribe(function (data) {
+            _this.runs = data;
+            // console.log(this.runs);
+        });
+        this.backendCloudService.getLastRunNumber().subscribe(function (num) {
+            _this.run.runnumber = num;
+            _this.updateChart(_this.startDate, _this.endDate, _this.run.runnumber);
+        });
     };
-    SensorHistoryComponent.prototype.onClickSensorNum = function (sensorNum) {
-        this.updateChart(this.startDate, this.endDate, sensorNum);
-        console.log(sensorNum);
+    SensorHistoryComponent.prototype.onClickSensorNum = function (runNum) {
+        this.run.runnumber = runNum;
+        this.updateChart(this.startDate, this.endDate, runNum);
+        console.log(runNum);
     };
-    SensorHistoryComponent.prototype.updateChart = function (startDate, endDate, sensorNum) {
+    SensorHistoryComponent.prototype.updateChart = function (startDate, endDate, runNumber) {
+        var _this = this;
+        this.backendCloudService.getHistoricSensorValues(startDate, endDate, this.run.runnumber).subscribe(function (data) {
+            _this.sensors = data;
+            console.log(_this.sensors);
+            _this.tempHistory = _this.buildChartArray(_this.sensors);
+            // console.log(this.tempHistory);
+        });
     };
     SensorHistoryComponent.prototype.buildChartArray = function (sensorData) {
-        return sensorData.map(function (data) { return [new Date(data['time']).valueOf(), data['temp']]; });
+        return sensorData.map(function (data) { return [new Date(data['time']).valueOf(), data['pressure']]; });
     };
     return SensorHistoryComponent;
 }());
 SensorHistoryComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'chamber-history',
+        selector: 'sensor-history',
         template: __webpack_require__("../../../../../src/app/sensor-history/sensor-history.component.html"),
         styles: [__webpack_require__("../../../../../src/app/sensor-history/sensor-history.component.css")],
-        providers: []
+        providers: [__WEBPACK_IMPORTED_MODULE_3__backendCloudService_service__["a" /* BackendCloudService */]]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__backendCloudService_service__["a" /* BackendCloudService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__backendCloudService_service__["a" /* BackendCloudService */]) === "function" && _a || Object])
 ], SensorHistoryComponent);
 
+var _a;
 //# sourceMappingURL=sensor-history.component.js.map
 
 /***/ }),

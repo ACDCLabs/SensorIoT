@@ -20,8 +20,11 @@ import { HeatmapComponent } from './charts/heatmap/heatmap.component';
 import { SensorHistoryComponent } from './sensor-history/sensor-history.component';
 import { HistoryChartComponent } from './charts/history-chart/history-chart.component';
 import { Sensor } from './models/sensor/sensor';
+import { Run } from './models/run/run';
 import { SensorDescriptor } from './models/sensor-descriptor/sensor-descriptor';
 import { ClockService } from './clock.service';
+import { FormsModule }   from '@angular/forms';
+
 //import { SensorList } from './models/sensor-list/sensor-list';
 
 @NgModule({
@@ -38,7 +41,8 @@ import { ClockService } from './clock.service';
     SensorHistoryComponent,
     HistoryChartComponent,
     Sensor,
-    SensorDescriptor
+    SensorDescriptor,
+    Run
     // SensorList
   ],
   imports: [
@@ -48,7 +52,8 @@ import { ClockService } from './clock.service';
     CollapseModule.forRoot(),
     NgxGaugeModule,
     ChartModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
 
     providers: [

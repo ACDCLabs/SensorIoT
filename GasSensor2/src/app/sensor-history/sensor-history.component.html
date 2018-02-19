@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+      <h3> Augewählter run : {{run.runnumber}} </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <app-history-chart [historyChartData]="tempHistory"> </app-history-chart>
+    </div>
+    <div class="col-md-3 ">
+      <div class="my-selector">
+        <ul>
+          <li *ngFor="let run of runs" (click)="onClickSensorNum(run.runnumber)">
+            {{run.runnumber}} {{run.rundescription}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!--
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-9">
+      <p>Range: {{startDate}} - {{endDate}}</p>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+</div>
+-->

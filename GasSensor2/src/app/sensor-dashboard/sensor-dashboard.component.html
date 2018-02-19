@@ -13,10 +13,23 @@
             <div class="form-group col-md-1">
               <button class="form-control stopwatchButton" (click)="stopRun()">Stop</button>
             </div>
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-1">
+              <div class="recodingIconPaused">
+                <div [ngClass]="{'recodingIconRec': dataIsRecording }">
+                  <i class="fa fa-play"> </i>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-1">
+              <label for="runNumber">Run</label>
+              <a class="form-control"> {{run.runnumber}} </a>
+              <small id="runNumberHelp" class="form-text text-muted">Nummer</small>
+            </div>
+            <div class="form-group col-md-8">
               <label for="description">Beschreibung</label>
-              <input type="text" class="form-control" id="runDescription" placeholder="Testlauf">
+              <input type="text" class="form-control" [(ngModel)]="run.description" name="runDescription" id="runDescription" placeholder="Testlauf">
               <small id="runDescriptionHelp" class="form-text text-muted">Kurze Beschreibung zu den aufgenommenen Daten.</small>
+              <!-- {{runDescription}}-->
             </div>
           </div>
         </form>
@@ -27,14 +40,11 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
-      <tempGauge [gaugeTemp]="pressure | number: '2.1-1'"> </tempGauge>
+      <tempGauge [gaugeTemp]="sensor.pressure | number: '2.1-1'"> </tempGauge>
       <p class="text-center"> Flaschendruck </p>
     </div>
     <div class="col-md-8">
       <app-history-chart [historyChartData]="pressureValues"> </app-history-chart>
     </div>
   </div>
-  <alert type="danger">
-    <strong>Oh snap!</strong> Change a few things up and try submitting again.
-  </alert>
 </div>

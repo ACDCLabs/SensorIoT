@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import 'rxjs/Rx';
 import { Sensor } from './models/sensor/sensor';
+import { Run } from './models/run/run';
 
 // import {IntervalObservable} from 'rxjs/observable/IntervalObservable';
 import 'rxjs/add/operator/map';
@@ -23,7 +24,7 @@ export class BackendCloudService {
   };
 
 
-  public getHistoricSensorValues(startDate: Date, endDate: Date, sensorNumber: number): Observable<Sensor[]> {
+  public getHistoricSensorValues(startDate: Date, endDate: Date, runNumber: number): Observable<Sensor[]> {
     //let startDate = new Date('2017-12-20');
     //let endDate = new Date('2017-12-25');
     var myfullurl =
@@ -31,7 +32,7 @@ export class BackendCloudService {
     let htmlBody = {
       start: this.toMySQLDateTimeString(startDate),
       end: this.toMySQLDateTimeString(endDate),
-      num: sensorNumber
+      runNumber: runNumber
     };
     // console.log(startDate);
     // console.log(myfullurl, htmlBody);
@@ -46,7 +47,7 @@ export class BackendCloudService {
       this.baseUrl + '/sensorvalue';
     let htmlBody = {
       num: sensor.num,
-      pressure: sensor.value,
+      pressure: sensor.pressure,
       runNumber: runNumber,
       runDescription: runDescription
     };
@@ -56,6 +57,24 @@ export class BackendCloudService {
       .map(
       response => response.json())
       .map(json => <string>json["data"])
+  }
+
+  public getRunList ():Observable<Run[]> {
+    var myfullurl =
+      this.baseUrl + '/runs';
+      return this.http.get(myfullurl)
+          .map(
+          response => response.json())
+          .map(json => <Run[]>json["data"])
+  }
+
+  public getLastRunNumber(): Observable<number>{
+    var myfullurl =
+      this.baseUrl + '/lastrunnumber';
+      return this.http.get(myfullurl)
+          .map(
+          response => response.json())
+          .map(json => <number>json["data"])
   }
 
   private handleError(error: any): Promise<any> {

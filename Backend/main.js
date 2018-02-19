@@ -32,7 +32,7 @@ dbConnection.connect(function(err) {
   }
 });
 
-function storeSensorValueInDB(value, msg, runNumber) {
+function storeSensorValueInDB(value, msg, runNumber, runDescription) {
   var timeStamp = new Date();
   // console.log('Storing Data');
   // console.log(temps);
@@ -40,7 +40,11 @@ function storeSensorValueInDB(value, msg, runNumber) {
   // console.log(tempValues);
   dbDataModel.time = timeStamp;
   dbDataModel.num = 1;
+  dbDataModel.message = msg;
   dbDataModel.pressure = value;
+  dbDataModel.runNumber = runNumber;
+  dbDataModel.runDescription = runDescription;
+
 
   dbConnection.query('INSERT into sensorvalues Set ?', dbDataModel, function(err, result) {
     if (err)
@@ -65,7 +69,9 @@ router.post("/sensorvalues", function(req, res) {
     var queryString = 'SELECT ' +
       ' time,  ' +
       ' num, ' +
-      ' temp ' +
+      ' pressure, ' +
+      ' runNumber, ' +
+      ' runDescription ' +
       ' FROM SensorValues ' + // note that is the name of the SQL table as defined in CreateSchema.sql
       ' WHERE runNumber =' + req.body.runNumber + ' ' +
       'AND +time BETWEEN \'' + req.body.start + '\'' +
@@ -119,16 +125,19 @@ router.get("/sensorvalues", function(req, res) {
 
 router.route("/sensorvalue")
   .post(function(req, res) {
-    let value = req.body.value;
-    let msg = req.body.msg;
+    let pressure = req.body.pressure;
+    let message = req.body.msg;
     let runNumber = req.body.runNumber;
+    let runDescription = req.body.runDescription;
+    console.log(req.body);
+    storeSensorValueInDB(pressure, message, runNumber, runDescription);
     try {
-      storeSensorValueInDB(value, msg, runNumber);
-       res.status(200).json({
-         status: 'success',
-         message: 'Sensor value stored'
-       });
-       // console.log("storing Sensor Value");
+      storeSensorValueInDB(pressure, message, runNumber, runDescription);
+      res.status(200).json({
+        status: 'success',
+        message: 'Sensor value stored'
+      });
+      // console.log("storing Sensor Value");
     } catch (err) {
       res.status(500).json({
         status: 'error',
@@ -138,6 +147,55 @@ router.route("/sensorvalue")
       return;
     }
   });
+
+router.route("/runs")
+  .get(function(req, res) {
+    dbConnection.query('SELECT DISTINCT runnumber, rundescription from SensorValues ',
+      function(err, rows, fields) {
+
+        if (!err) {
+          // console.log('Query result: ', rows);
+          // res.setHeader('Content-Type', "aplication/json");
+
+          res.status(200).json({
+            status: 'success',
+            data: rows
+          });
+          // res.end('this is the query result');
+        } else {
+          res.status(500).json({
+            status: 'error',
+            error: "Internal server error"
+          });
+          console.log('Error while performing Query.' + err);
+        }
+      })
+  });
+
+  router.route("/lastrunnumber")
+    .get(function(req, res) {
+      dbConnection.query('SELECT MAX(runnumber) from SensorValues ',
+        function(err, rows, fields) {
+
+          if (!err) {
+            // console.log('Query result: ', rows);
+            // res.setHeader('Content-Type', "aplication/json");
+
+            res.status(200).json({
+              status: 'success',
+              data: (rows[0])['MAX(runnumber)']
+            });
+            console.log(rows);
+            // res.end('this is the query result');
+          } else {
+            res.status(500).json({
+              status: 'error',
+              error: "Internal server error"
+            });
+            console.log('Error while performing Query.' + err);
+          }
+        })
+    });
 
 
 // Register the routes

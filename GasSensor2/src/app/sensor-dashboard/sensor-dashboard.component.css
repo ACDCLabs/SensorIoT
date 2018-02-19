@@ -8,3 +8,18 @@
 .stopwatchButton {
   margin-top: 33px;
 }
+
+
+.recodingIconPaused {
+  font-size: 25pt;
+  margin-top: 27px;
+  margin-left: 10px;
+  color: gray
+}
+
+.recodingIconRec {
+  font-size: 25pt;
+  margin-top: 27px;
+  margin-left: 10px;
+  color: red
+}

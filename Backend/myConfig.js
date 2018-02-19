@@ -15,6 +15,7 @@ myConfig.dataModel = {
     time: new Date(),
     num: 0, // Sensor Number
     pressure: 0.0,
+    message: "No Message",
     runNumber: 0,
     runDescription: "NoText"
 };
