@@ -20,7 +20,7 @@ export class BackendCloudService {
 
   constructor(private http: Http, private zone: NgZone) {
     //this.http._defaultOptions.headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
-    // console.log(window.location.hostname);
+    // console.log(window.location);
   };
 
 
@@ -76,6 +76,14 @@ export class BackendCloudService {
           response => response.json())
           .map(json => <number>json["data"])
   }
+
+public getServerIPAddress(): Observable<string> {
+  var myfullurl =
+  this.baseUrl + '/serveripaddress';
+  return this.http.get(myfullurl)
+  .map(response => response.json())
+  .map(json => <string>json["data"])
+}
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only

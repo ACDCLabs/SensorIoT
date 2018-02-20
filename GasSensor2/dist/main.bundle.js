@@ -265,7 +265,7 @@ var BackendCloudService = (function () {
         this.zone = zone;
         this.baseUrl = 'http://' + window.location.hostname + ':4200/api';
         //this.http._defaultOptions.headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
-        // console.log(window.location.hostname);
+        // console.log(window.location);
     }
     ;
     BackendCloudService.prototype.getHistoricSensorValues = function (startDate, endDate, runNumber) {
@@ -305,6 +305,12 @@ var BackendCloudService = (function () {
     };
     BackendCloudService.prototype.getLastRunNumber = function () {
         var myfullurl = this.baseUrl + '/lastrunnumber';
+        return this.http.get(myfullurl)
+            .map(function (response) { return response.json(); })
+            .map(function (json) { return json["data"]; });
+    };
+    BackendCloudService.prototype.getServerIPAddress = function () {
+        var myfullurl = this.baseUrl + '/serveripaddress';
         return this.http.get(myfullurl)
             .map(function (response) { return response.json(); })
             .map(function (json) { return json["data"]; });
@@ -556,13 +562,15 @@ var HistoryChartComponent = (function () {
                 }
             },
             yAxis: {
+                max: 1,
+                min: 0.5,
                 lineColor: "#808080",
                 tickColor: "#ffffff",
                 gridLineColor: "#808080",
                 gridLineWidth: 1,
                 labels: {
                     enabled: true,
-                    format: '{value:.1f}',
+                    format: '{value:.3f}',
                     style: {
                         color: "#ffffff"
                     }
@@ -931,7 +939,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "#ControllerPlus {\n  position: absolute;\n  height: 30px;\n  width: 30px;\n  left: 145px;\n  top: 150px;\n}\n\n#ControllerMinus {\n  position: absolute;\n  height: 30px;\n  width: 30px;\n  left: 55px;\n  top: 150px;\n}\n\n#setTemperature {\n  position: absolute;\n  height: auto;\n  width: auto;\n  left: 95px;\n  top: 155px;\n  font-size: 15pt;\n}\n\n.gauge-size {\n  height: 200px;\n  width: 200px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n", ""]);
+exports.push([module.i, "#ControllerPlus {\n  position: absolute;\n  height: 30px;\n  width: 30px;\n  left: 145px;\n  top: 150px;\n}\n\n#ControllerMinus {\n  position: absolute;\n  height: 30px;\n  width: 30px;\n  left: 55px;\n  top: 150px;\n}\n\n#setTemperature {\n  position: absolute;\n  height: auto;\n  width: auto;\n  left: 95px;\n  top: 155px;\n  font-size: 15pt;\n}\n\n.gauge-size {\n  height: 300px;\n  width: 300px;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n}\n", ""]);
 
 // exports
 
@@ -944,7 +952,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/charts/tempGauge/tempGauge.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container gauge-size\">\n    <ngx-gauge [type]=\"gaugeType\" [value]=\"gaugeTemp\" [foregroundColor]=\"calcForegroundColor(gaugeTemp)\" [label]=\"gaugeLabel\" [append]=\"gaugeAppendText\" [min]=\"gaugeMin\" [max]=\"gaugeMax\" [cap]=\"round\" [thick]=25 [duration]=1>\n    </ngx-gauge>\n</div>\n"
+module.exports = "<div class=\"container gauge-size\">\n    <ngx-gauge [type]=\"gaugeType\" [value]=\"gaugeTemp\" [foregroundColor]=\"calcForegroundColor(gaugeTemp)\" [label]=\"gaugeLabel\" [append]=\"gaugeAppendText\" [min]=\"gaugeMin\" [max]=\"gaugeMax\" [cap]=\"round\" [thick]=20 [duration]=1>\n    </ngx-gauge>\n</div>\n"
 
 /***/ }),
 
@@ -972,7 +980,7 @@ var TempGaugeComponent = (function () {
         this.gaugeAppendText = "bar";
         this.gaugeForegroundColor = "rgba(255,0,0,1)";
         this.gaugeMin = 0;
-        this.gaugeMax = 6;
+        this.gaugeMax = 1;
     }
     TempGaugeComponent.prototype.ngOnInit = function () {
     };
@@ -1655,7 +1663,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 33px;\n}\n\n\n.recodingIconPaused {\n  font-size: 25pt;\n  margin-top: 27px;\n  margin-left: 10px;\n  color: gray\n}\n\n.recodingIconRec {\n  font-size: 25pt;\n  margin-top: 27px;\n  margin-left: 10px;\n  color: red\n}\n", ""]);
+exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 30px;\n}\n\n\n.recodingIconPaused {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: gray\n}\n\n.recodingIconRec {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: red\n}\n", ""]);
 
 // exports
 
@@ -1668,7 +1676,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-dashboard/sensor-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c!important\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-8\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-8\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.description\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.1-1'\"> </tempGauge>\n      <p class=\"text-center\"> Flaschendruck </p>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c;\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-8\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-8\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.description\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.2-2'\"> </tempGauge>\n      <p class=\"text-center\"> Flaschendruck </p>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <p> Remote Server IP Address: {{serverIPAddress}} </p>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1727,10 +1735,11 @@ var SensorDashboardComponent = (function () {
         });
         this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
         // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-        setInterval(function () { _this.createRandomData(); }, 1000);
+        // setInterval(() => { this.createRandomData(); }, 1000);
         this.clockService.createStopWatch().subscribe(function (stopWatchMillis) { return _this.stopWatch = new Date(stopWatchMillis); });
-        this.clockService.startStopWatch();
+        this.clockService.stopStopWatch();
         this.pollAnalogValues();
+        this.backendCloudService.getServerIPAddress().subscribe(function (ipAddress) { return _this.serverIPAddress = ipAddress; });
     };
     SensorDashboardComponent.prototype.createRandomData = function () {
         // array.push() does not work since angular does not detetct the change in the Array

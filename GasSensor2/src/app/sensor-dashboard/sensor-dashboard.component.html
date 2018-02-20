@@ -1,4 +1,4 @@
-<div class="jumbotron" style="background:#2c2c2c!important">
+<div class="jumbotron" style="background:#2c2c2c;">
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-4">
@@ -40,11 +40,18 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
-      <tempGauge [gaugeTemp]="sensor.pressure | number: '2.1-1'"> </tempGauge>
+      <tempGauge [gaugeTemp]="sensor.pressure | number: '2.2-2'"> </tempGauge>
       <p class="text-center"> Flaschendruck </p>
     </div>
     <div class="col-md-8">
       <app-history-chart [historyChartData]="pressureValues"> </app-history-chart>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <p> Remote Server IP Address: {{serverIPAddress}} </p>
     </div>
   </div>
 </div>

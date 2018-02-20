@@ -1,3 +1,4 @@
+'use strict';
 var myConfig = require('./myConfig');
 
 var server = require('http').createServer(),
@@ -8,6 +9,11 @@ var server = require('http').createServer(),
   app = express(),
   port = myConfig.SERVER_PORT;
 
+// used to fin the IP-address of  the server
+
+var os = require('os');
+var ifaces = os.networkInterfaces();
+var ipAddress;
 
 // This object holds the information for the database connection
 var dbConnection = mysql.createConnection({
@@ -15,6 +21,29 @@ var dbConnection = mysql.createConnection({
   user: myConfig.DB_USER,
   password: myConfig.DB_PASSWORD,
   database: myConfig.DB_NAME
+});
+
+// go through all network interfaces and print IP addresses
+Object.keys(ifaces).forEach(function(ifname) {
+  var alias = 0;
+
+  ifaces[ifname].forEach(function(iface) {
+    if ('IPv4' !== iface.family || iface.internal !== false) {
+      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+      return;
+    }
+
+    if (alias >= 1) {
+      // this single interface has multiple ipv4 addresses
+      console.log(ifname + ':' + alias, iface.address);
+      ipAddress = iface.address;
+    } else {
+      // this interface has only one ipv4 adress
+      console.log(ifname, iface.address);
+      ipAddress = iface.address;
+    }
+    ++alias;
+  });
 });
 
 // these is the data model as stored in the MySQL Database
@@ -172,32 +201,38 @@ router.route("/runs")
       })
   });
 
-  router.route("/lastrunnumber")
-    .get(function(req, res) {
-      dbConnection.query('SELECT MAX(runnumber) from SensorValues ',
-        function(err, rows, fields) {
+router.route("/lastrunnumber")
+  .get(function(req, res) {
+    dbConnection.query('SELECT MAX(runnumber) from SensorValues ',
+      function(err, rows, fields) {
 
-          if (!err) {
-            // console.log('Query result: ', rows);
-            // res.setHeader('Content-Type', "aplication/json");
+        if (!err) {
+          // console.log('Query result: ', rows);
+          // res.setHeader('Content-Type', "aplication/json");
 
-            res.status(200).json({
-              status: 'success',
-              data: (rows[0])['MAX(runnumber)']
-            });
-            console.log(rows);
-            // res.end('this is the query result');
-          } else {
-            res.status(500).json({
-              status: 'error',
-              error: "Internal server error"
-            });
-            console.log('Error while performing Query.' + err);
-          }
-        })
-    });
+          res.status(200).json({
+            status: 'success',
+            data: (rows[0])['MAX(runnumber)']
+          });
+          console.log(rows);
+          // res.end('this is the query result');
+        } else {
+          res.status(500).json({
+            status: 'error',
+            error: "Internal server error"
+          });
+          console.log('Error while performing Query.' + err);
+        }
+      })
+  });
 
-
+router.route("/serveripaddress")
+  .get(function(req, res) {
+    res.status(200).json({
+      status: 'success',
+      data: ipAddress
+    })
+  });
 // Register the routes
 // the REST api will be prefixed with /api
 app.use('/api', router);

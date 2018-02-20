@@ -16,7 +16,7 @@ export class TempGaugeComponent implements OnInit {
   private gaugeAppendText = "bar";
   private gaugeForegroundColor = "rgba(255,0,0,1)";
   private gaugeMin = 0;
-  private gaugeMax = 6;
+  private gaugeMax = 1;
 
   @Input() gaugeTemp: number;
 

@@ -34,6 +34,7 @@ export class SensorDashboardComponent implements OnInit {
   //private time: Date;
   private stopWatch: Date;
   private dataIsRecording: boolean = false;
+  private serverIPAddress: string;
 
   constructor(private particleCloudService: ParticleCloudService,
     private backendCloudService: BackendCloudService,
@@ -55,10 +56,11 @@ export class SensorDashboardComponent implements OnInit {
     });
     this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
     // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-    setInterval(() => { this.createRandomData(); }, 1000);
+    // setInterval(() => { this.createRandomData(); }, 1000);
     this.clockService.createStopWatch().subscribe(stopWatchMillis => this.stopWatch = new Date(stopWatchMillis));
-    this.clockService.startStopWatch();
+    this.clockService.stopStopWatch();
     this.pollAnalogValues();
+    this.backendCloudService.getServerIPAddress().subscribe((ipAddress) => this.serverIPAddress = ipAddress);
   }
 
   createRandomData() {
