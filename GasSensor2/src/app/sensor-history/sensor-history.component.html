@@ -1,31 +1,47 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-9">
       <h3> Augewählter run : {{run.runnumber}} </h3>
-    </div>
-  </div>
-  <abbr></abbr>
-  <div class="row">
-    <div class="col-md-9">
       <app-history-chart [historyChartData]="tempHistory"> </app-history-chart>
     </div>
-    <div class="col-md-3 ">
-      <div class="my-selector">
-        <ul>
-          <li *ngFor="let run of runs" (click)="onClickSensorNum(run.runnumber)">
-            {{run.runnumber}} {{run.rundescription}}
-          </li>
-        </ul>
-      </div>
+    <div class="col-md-3">
+        <h3> Runlist </h3>
+      <table class="table table-sm my-selector-table">
+        <thead align="center">
+          <tr>
+            <th>num</th>
+            <th>name</th>
+            <th>kill</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let run of runs">
+            <td (click)="onClickRunNum(run.runnumber)">
+              {{run.runnumber}}
+            </td>
+            <td (click)="onClickRunNum(run.runnumber)">
+              {{run.rundescription}}
+            </td>
+            <td>
+              <i class="fa fa-trash" (click)="onClickDelete(run.runnumber)"> </i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
 <abbr></abbr>
-<div class="container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-md-9">
       <h3> Run statistiken </h3>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+
   </div>
 </div>
 <!--

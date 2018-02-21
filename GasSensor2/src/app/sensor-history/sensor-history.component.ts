@@ -38,7 +38,7 @@ export class SensorHistoryComponent implements OnInit {
   ngOnInit() {
     // console.log("HistoryComponent ngInit");
     let today = new Date().valueOf();
-    let backInMillis = 60 * 60 * 1000;
+    let backInMillis = 60 * 60 * 1000*24; // one day
     this.startDate = new Date(today - backInMillis);
     this.endDate = new Date();
     // console.log(this.startDate);
@@ -53,10 +53,20 @@ export class SensorHistoryComponent implements OnInit {
       });
   }
 
-  private onClickSensorNum(runNum: number) {
+  private onClickRunNum(runNum: number) {
     this.run.runnumber= runNum;
     this.updateChart(this.startDate, this.endDate, runNum);
     console.log(runNum);
+  }
+
+  private onClickDelete(runNum: number) {
+    this.backendCloudService.deleteRun(runNum).subscribe(
+      (res) => {
+        this.backendCloudService.getRunList().subscribe((data) => {
+          this.runs = data});
+        console.log(res);
+      }
+    )
   }
 
   private updateChart(startDate: Date, endDate: Date, runNumber: number) {
@@ -73,6 +83,6 @@ export class SensorHistoryComponent implements OnInit {
   }
 
   private clacRunStatistics(): void {
-    
+
   }
 }

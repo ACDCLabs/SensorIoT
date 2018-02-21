@@ -104,7 +104,7 @@ export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
       }
     },
     yAxis: {
-      max: 1,
+      max: 2,
       min: 0.5,
       lineColor: "#808080",
       tickColor: "#ffffff",

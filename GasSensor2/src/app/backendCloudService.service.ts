@@ -16,7 +16,7 @@ import 'rxjs/add/observable/interval';
 @Injectable()
 export class BackendCloudService {
 
-  private baseUrl: string = 'http://'+window.location.hostname+':4200/api';
+  private baseUrl: string = 'http://' + window.location.hostname + ':4200/api';
 
   constructor(private http: Http, private zone: NgZone) {
     //this.http._defaultOptions.headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
@@ -42,7 +42,7 @@ export class BackendCloudService {
       .map(json => <Sensor[]>json["data"])
   }
 
-  public storeSensorValue(sensor: Sensor, runNumber: number, runDescription: string): Observable<string>{
+  public storeSensorValue(sensor: Sensor, runNumber: number, runDescription: string): Observable<string> {
     var myfullurl =
       this.baseUrl + '/sensorvalue';
     let htmlBody = {
@@ -53,37 +53,46 @@ export class BackendCloudService {
     };
     // console.log(startDate);
     // console.log(myfullurl, htmlBody);
-  return this.http.post(myfullurl, htmlBody)
+    return this.http.post(myfullurl, htmlBody)
       .map(
       response => response.json())
       .map(json => <string>json["data"])
   }
 
-  public getRunList ():Observable<Run[]> {
+  public getRunList(): Observable<Run[]> {
     var myfullurl =
       this.baseUrl + '/runs';
-      return this.http.get(myfullurl)
-          .map(
-          response => response.json())
-          .map(json => <Run[]>json["data"])
+    return this.http.get(myfullurl)
+      .map(
+      response => response.json())
+      .map(json => <Run[]>json["data"])
   }
 
-  public getLastRunNumber(): Observable<number>{
+  public getLastRunNumber(): Observable<number> {
     var myfullurl =
       this.baseUrl + '/lastrunnumber';
-      return this.http.get(myfullurl)
-          .map(
-          response => response.json())
-          .map(json => <number>json["data"])
+    return this.http.get(myfullurl)
+      .map(
+      response => response.json())
+      .map(json => <number>json["data"])
   }
 
-public getServerIPAddress(): Observable<string> {
-  var myfullurl =
-  this.baseUrl + '/serveripaddress';
-  return this.http.get(myfullurl)
-  .map(response => response.json())
-  .map(json => <string>json["data"])
-}
+  public deleteRun(runNumber: number): Observable<string> {
+    var myfullurl =
+      this.baseUrl + '/run/' + runNumber;
+    return this.http.delete(myfullurl)
+      .map(
+      response => response.json())
+      .map(json => <string>json["data"])
+  }
+  
+  public getServerIPAddress(): Observable<string> {
+    var myfullurl =
+      this.baseUrl + '/serveripaddress';
+    return this.http.get(myfullurl)
+      .map(response => response.json())
+      .map(json => <string>json["data"])
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
@@ -92,13 +101,13 @@ public getServerIPAddress(): Observable<string> {
   }
 
   private toMySQLDateTimeString(dateTime: Date): String {
-    let date: String  =
+    let date: String =
       dateTime.getFullYear().toString() + '-' +
-      (dateTime.getMonth()+1).toString() + '-' +
-      dateTime.getDate ().toString();
+      (dateTime.getMonth() + 1).toString() + '-' +
+      dateTime.getDate().toString();
     let time: String = dateTime.toLocaleTimeString();
 
-    return (date+' '+time);
+    return (date + ' ' + time);
 
   }
 }

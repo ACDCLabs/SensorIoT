@@ -201,6 +201,27 @@ router.route("/runs")
       })
   });
 
+router.route("/run/:id")
+  .delete(function(req, res) {
+    dbConnection.query('DELETE from SensorValues where runnumber=?',
+    [req.params.id],
+      function(err, rows, fileds) {
+        if (!err) {
+          res.status(200).json({
+            status: 'success',
+            data: 'deleted run number:' +req.params.id
+          });
+        } else {
+          res.status(500).json({
+            status: 'error',
+            error: "internal server error"
+          });
+          console.log('Error while performing delete run ' + err);
+        }
+      })
+  });
+
+
 router.route("/lastrunnumber")
   .get(function(req, res) {
     dbConnection.query('SELECT MAX(runnumber) from SensorValues ',
@@ -225,6 +246,7 @@ router.route("/lastrunnumber")
         }
       })
   });
+
 
 router.route("/serveripaddress")
   .get(function(req, res) {

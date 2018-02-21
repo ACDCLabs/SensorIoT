@@ -28,7 +28,11 @@ export class ParticleCloudService {
   };
 
   adcValueToPressure(adcValue: number): number {
-    return adcValue/1024;
+    let pressure: number;
+    // according to datasheet pressure sensor MPX5700 from NXP
+    pressure = (adcValue/4095 -0.035)/0.0012858;
+
+    return pressure /100;
   }
 
   // https://api.particle.io/v1/devices/260056001351353432393433/setMessage -d args="Nix" -d access_token=d4ba726eea679aaa23d03dc3edba6ece90d4f9d0

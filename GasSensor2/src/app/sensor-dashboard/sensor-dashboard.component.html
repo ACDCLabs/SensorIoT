@@ -27,7 +27,7 @@
             </div>
             <div class="form-group col-md-8">
               <label for="description">Beschreibung</label>
-              <input type="text" class="form-control" [(ngModel)]="run.description" name="runDescription" id="runDescription" placeholder="Testlauf">
+              <input type="text" class="form-control" [(ngModel)]="run.rundescription" name="runDescription" id="runDescription" placeholder="Testlauf">
               <small id="runDescriptionHelp" class="form-text text-muted">Kurze Beschreibung zu den aufgenommenen Daten.</small>
               <!-- {{runDescription}}-->
             </div>
@@ -41,7 +41,7 @@
   <div class="row">
     <div class="col-md-4">
       <tempGauge [gaugeTemp]="sensor.pressure | number: '2.2-2'"> </tempGauge>
-      <p class="text-center"> Flaschendruck </p>
+      <h3 class="text-center"> Flaschendruck </h3>
     </div>
     <div class="col-md-8">
       <app-history-chart [historyChartData]="pressureValues"> </app-history-chart>
