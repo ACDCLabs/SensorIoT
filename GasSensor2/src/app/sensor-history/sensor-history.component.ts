@@ -6,6 +6,7 @@ import { Run } from '../models/run/run';
 import { HistoryChartComponent } from '../charts/history-chart/history-chart.component';
 import { BackendCloudService } from '../backendCloudService.service';
 
+
 @Component({
   selector: 'sensor-history',
   templateUrl: './sensor-history.component.html',

@@ -25,9 +25,9 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sensor_chart_sensor_chart_component__ = __webpack_require__("../../../../../src/app/sensor-chart/sensor-chart.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__charts_tempGaugeCtrl_tempGaugeCtrl_component__ = __webpack_require__("../../../../../src/app/charts/tempGaugeCtrl/tempGaugeCtrl.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sensor_dashboard_sensor_dashboard_component__ = __webpack_require__("../../../../../src/app/sensor-dashboard/sensor-dashboard.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sensor_history_sensor_history_component__ = __webpack_require__("../../../../../src/app/sensor-history/sensor-history.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__sensor_dashboard_sensor_dashboard_component__ = __webpack_require__("../../../../../src/app/sensor-dashboard/sensor-dashboard.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__sensor_history_sensor_history_component__ = __webpack_require__("../../../../../src/app/sensor-history/sensor-history.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__sensor_eventlist_sensor_eventlist_component__ = __webpack_require__("../../../../../src/app/sensor-eventlist/sensor-eventlist.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -42,10 +42,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_4__sensor_dashboard_sensor_dashboard_component__["a" /* SensorDashboardComponent */] },
-    { path: 'gaugeCtrl', component: __WEBPACK_IMPORTED_MODULE_3__charts_tempGaugeCtrl_tempGaugeCtrl_component__["a" /* TempGaugeCtrlComponent */] },
+    { path: 'dashboard', component: __WEBPACK_IMPORTED_MODULE_3__sensor_dashboard_sensor_dashboard_component__["a" /* SensorDashboardComponent */] },
+    { path: 'eventlist', component: __WEBPACK_IMPORTED_MODULE_5__sensor_eventlist_sensor_eventlist_component__["a" /* SensorEventlistComponent */] },
     { path: 'chart', component: __WEBPACK_IMPORTED_MODULE_2__sensor_chart_sensor_chart_component__["a" /* SensorChartComponent */] },
-    { path: 'history', component: __WEBPACK_IMPORTED_MODULE_5__sensor_history_sensor_history_component__["a" /* SensorHistoryComponent */] }
+    { path: 'history', component: __WEBPACK_IMPORTED_MODULE_4__sensor_history_sensor_history_component__["a" /* SensorHistoryComponent */] }
 ];
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
@@ -151,12 +151,16 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__models_sensor_descriptor_sensor_descriptor__ = __webpack_require__("../../../../../src/app/models/sensor-descriptor/sensor-descriptor.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__clock_service__ = __webpack_require__("../../../../../src/app/clock.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap_modal__ = __webpack_require__("../../../../ngx-bootstrap/modal/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__sensor_eventlist_sensor_eventlist_component__ = __webpack_require__("../../../../../src/app/sensor-eventlist/sensor-eventlist.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -205,7 +209,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_19__charts_history_chart_history_chart_component__["a" /* HistoryChartComponent */],
             __WEBPACK_IMPORTED_MODULE_20__models_sensor_sensor__["a" /* Sensor */],
             __WEBPACK_IMPORTED_MODULE_22__models_sensor_descriptor_sensor_descriptor__["a" /* SensorDescriptor */],
-            __WEBPACK_IMPORTED_MODULE_21__models_run_run__["a" /* Run */]
+            __WEBPACK_IMPORTED_MODULE_21__models_run_run__["a" /* Run */],
+            __WEBPACK_IMPORTED_MODULE_26__sensor_eventlist_sensor_eventlist_component__["a" /* SensorEventlistComponent */]
             // SensorList
         ],
         imports: [
@@ -216,7 +221,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_6_ngx_gauge__["a" /* NgxGaugeModule */],
             __WEBPACK_IMPORTED_MODULE_7_angular_highcharts__["b" /* ChartModule */],
             __WEBPACK_IMPORTED_MODULE_14__app_routing_module__["a" /* AppRoutingModule */],
-            __WEBPACK_IMPORTED_MODULE_24__angular_forms__["a" /* FormsModule */]
+            __WEBPACK_IMPORTED_MODULE_24__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_25_ngx_bootstrap_modal__["a" /* ModalModule */].forRoot()
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_5__backendCloudService_service__["a" /* BackendCloudService */],
@@ -544,7 +550,8 @@ var HistoryChartComponent = (function () {
             },
             colors: ["rgba(148,202,255,1.0)", "#94CAFF", "#FF7070"],
             series: [
-                { type: 'area', name: "Druck", color: "rgba(148,202,255,1.0)", data: [[], []] }
+                { type: 'area', name: "Druck", color: "rgba(148,202,255,1.0)", data: [[], []] },
+                { type: 'line', name: "Limit", color: "rgba(255,10,10,1.0)", data: [[], []] }
             ],
             xAxis: {
                 type: 'datetime',
@@ -568,8 +575,8 @@ var HistoryChartComponent = (function () {
                 }
             },
             yAxis: {
-                max: 2,
-                min: 0.5,
+                max: 1.3,
+                min: 0.8,
                 lineColor: "#808080",
                 tickColor: "#ffffff",
                 gridLineColor: "#808080",
@@ -593,13 +600,22 @@ var HistoryChartComponent = (function () {
     HistoryChartComponent.prototype.ngAfterViewInit = function () {
         // this.chart.ref.redraw();
         this.chart.ref.series[0].setData(this.historyChartData);
+        if (this.limit.length > 0) {
+            this.chart.ref.series[1].setData(this.limit);
+        }
     };
     HistoryChartComponent.prototype.ngOnChanges = function (changes) {
         // console.log(this.historyChartData);
         // this.tempChartSeries.data = this.tempChartData;
         if (this.chart.ref)
             this.chart.ref.series[0].setData(this.historyChartData);
+        if (this.limit.length > 0 && this.chart.ref) {
+            this.chart.ref.series[1].setData(this.limit);
+        }
         //this.showTemperatures(this.tempChartData);
+    };
+    HistoryChartComponent.prototype.getChart = function () {
+        return this.chart;
     };
     return HistoryChartComponent;
 }());
@@ -607,6 +623,10 @@ __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
     __metadata("design:type", Array)
 ], HistoryChartComponent.prototype, "historyChartData", void 0);
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
+    __metadata("design:type", Array)
+], HistoryChartComponent.prototype, "limit", void 0);
 HistoryChartComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'app-history-chart',
@@ -1390,7 +1410,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"./assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <!-- a class=\"nav-link\" routerLink=\"/gaugeCtrl\" routerLinkActive=\"active\"> Gauge </a-->\n    <!-- a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a-->\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"./assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <a class=\"nav-link\" routerLink=\"/eventlist\" routerLinkActive=\"active\"> Eventlist </a>\n    <!-- a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a-->\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -1483,6 +1503,45 @@ var ParticleCloudService = (function () {
         pressure = (adcValue / 4095 - 0.035) / 0.0012858;
         return pressure / 100;
     };
+    ParticleCloudService.prototype.pressureValueToAdc = function (pressure) {
+        var adcValue;
+        // according to datasheet pressure sensor MPX5700 from NXP
+        // pressure = (adcValue/4095 -0.035)/0.0012858;
+        adcValue = (pressure * 0.0012858 * 100 + 0.035) * 4095;
+        return adcValue;
+    };
+    // buzz miliseconds length
+    ParticleCloudService.prototype.buzz = function (length) {
+        var mycommand = 'buzz';
+        var mymessage = new String(length);
+        var body = { args: mymessage };
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
+        //headers.append('Content-type', 'application/json');
+        var myfullurl = this.myparticlebaseUrl
+            + '/devices/' + this.photonid
+            + '/' + mycommand;
+        console.log(body);
+        return this.http.post(myfullurl, body, { headers: headers }).toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    ParticleCloudService.prototype.setAlarm = function (level) {
+        var mycommand = 'setAlarm';
+        var mymessage = level.toString();
+        var body = { args: mymessage };
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        console.log(mymessage);
+        headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
+        //headers.append('Content-type', 'application/json');
+        var myfullurl = this.myparticlebaseUrl
+            + '/devices/' + this.photonid
+            + '/' + mycommand;
+        console.log(" particleCloudService.setAlarm " + body);
+        return this.http.post(myfullurl, body, { headers: headers }).toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     // https://api.particle.io/v1/devices/260056001351353432393433/setMessage -d args="Nix" -d access_token=d4ba726eea679aaa23d03dc3edba6ece90d4f9d0
     ParticleCloudService.prototype.sendText = function (mymessage) {
         var mycommand = 'setMessage';
@@ -1502,7 +1561,7 @@ var ParticleCloudService = (function () {
             .catch(this.handleError);
     };
     ParticleCloudService.prototype.readAnalogValue = function () {
-        return this.readIOValue('analog', null);
+        return this.readIOValue('pressure', null);
     };
     ParticleCloudService.prototype.readDigitalValue = function (channel) {
         return this.readIOValue('digital', channel);
@@ -1672,7 +1731,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 30px;\n}\n\n\n.recodingIconPaused {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: gray\n}\n\n.recodingIconRec {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: red\n}\n", ""]);
+exports.push([module.i, ".stopwatch {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  font-size: 30pt;\n  margin-top: 20px;\n}\n.stopwatchButton {\n  margin-top: 32px;\n}\n\n\n.recodingIconPaused {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: gray\n}\n\n.recodingIconRec {\n  font-size: 25pt;\n  margin-top: 25px;\n  margin-left: 10px;\n  color: red\n}\n", ""]);
 
 // exports
 
@@ -1685,7 +1744,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-dashboard/sensor-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c;\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-8\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-8\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.rundescription\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.2-2'\"> </tempGauge>\n      <h3 class=\"text-center\"> Flaschendruck </h3>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <p> Remote Server IP Address: {{serverIPAddress}} </p>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c;\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-5\">\n              <label for=\"Message\">Nachricht</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"messageToSend\" name=\"messageToSend\" id=\"messageToSend\" placeholder=\"Nix\">\n              <small id=\"messageToSendHelp\" class=\"form-text text-muted\">Text an Flasche senden</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"sendMessage()\">Send</button>\n            </div>\n            <div class=\"form-group col-md-3\">\n              <label for=\"Message\">Limit</label>\n              <input type=\"number\" class=\"form-control\" [(ngModel)]=\"pressureLimit\" (ngModelChange)=pressureLimitChange($event) step = \"0.01\" name=\"pressureLimit\" id=\"pressureLimit\" >\n              <small id=\"pressureLimitHelp\" class=\"form-text text-muted\">Limit</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"beepDevice()\">Alarm</button>\n            </div>\n          </div>\n        </form>\n      </div>\n      <div class=\"col-md-2\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-6\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-6\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.rundescription\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.2-2'\"> </tempGauge>\n      <h3 class=\"text-center\"> Flaschendruck </h3>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\" [limit]=\"pressureLimitLine\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <p> Remote Server IP Address: {{serverIPAddress}} </p>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1735,6 +1794,7 @@ var SensorDashboardComponent = (function () {
     }
     SensorDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.pressureLimit = 1.2;
         this.particleCloudService.readAnalogValue()
             .subscribe(function (value) {
             _this.sensor.pressure = _this.particleCloudService.adcValueToPressure(value["result"]);
@@ -1743,8 +1803,9 @@ var SensorDashboardComponent = (function () {
             _this.run.runnumber = num + 1;
         });
         this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
+        this.pressureLimitLine = this.createLimitArray();
         // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-        // setInterval(() => { this.createRandomData(); }, 1000);
+        setInterval(function () { _this.createRandomData(); }, 1000);
         this.clockService.createStopWatch().subscribe(function (stopWatchMillis) { return _this.stopWatch = new Date(stopWatchMillis); });
         this.clockService.stopStopWatch();
         this.pollAnalogValues();
@@ -1760,6 +1821,7 @@ var SensorDashboardComponent = (function () {
             this.backendCloudService.storeSensorValue(this.sensor, this.run.runnumber, this.run.rundescription).subscribe();
         if (this.pressureValues.length > this.maxArrayLength)
             this.pressureValues.shift();
+        this.pressureLimitLine = this.createLimitArray();
     };
     ;
     SensorDashboardComponent.prototype.startRun = function () {
@@ -1776,6 +1838,24 @@ var SensorDashboardComponent = (function () {
         // return false is needed to prevent tor bowser from posting the form and trigger a relaoad of the page
         return false;
     };
+    SensorDashboardComponent.prototype.sendMessage = function () {
+        this.particleCloudService.sendText(this.messageToSend);
+        console.log("sending " + this.messageToSend);
+        return false;
+    };
+    SensorDashboardComponent.prototype.beepDevice = function () {
+        var length = 1000; // duration in miliseconds
+        this.particleCloudService.buzz(length);
+        console.log("sending " + this.messageToSend);
+        return false;
+    };
+    SensorDashboardComponent.prototype.pressureLimitChange = function (event) {
+        var limit = this.particleCloudService.pressureValueToAdc(event); // limit in bar
+        this.particleCloudService.setAlarm(limit);
+        // console.log(event);
+        console.log(this.pressureLimit);
+        return false;
+    };
     SensorDashboardComponent.prototype.pollAnalogValues = function (time) {
         var _this = this;
         if (time === void 0) { time = 2000; }
@@ -1790,9 +1870,19 @@ var SensorDashboardComponent = (function () {
             if (_this.pressureValues.length > _this.maxArrayLength)
                 _this.pressureValues.shift();
             _this.pressureValues = _this.pressureValues.concat([[_this.sensor.time.valueOf(), _this.sensor.pressure]]);
+            _this.pressureLimitLine = _this.createLimitArray();
             // this.setValue(this.sensor.value);
             // console.log("values", this.pressureValues);
         });
+    };
+    SensorDashboardComponent.prototype.createLimitArray = function () {
+        var limitArray;
+        var values = this.pressureValues.map(function (elt) { return elt[0]; });
+        var max = Math.max.apply(null, values);
+        var min = Math.min.apply(null, values);
+        limitArray = [[min, this.pressureLimit], [max, this.pressureLimit]];
+        // console.log(limitArray);
+        return limitArray;
     };
     return SensorDashboardComponent;
 }());
@@ -1813,6 +1903,84 @@ SensorDashboardComponent = __decorate([
 ;
 var _a, _b, _c;
 //# sourceMappingURL=sensor-dashboard.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/sensor-eventlist/sensor-eventlist.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "#tf-eventList{\n\tpadding: 80px 0;\n}\n\n.space{\n\tmargin-top: 40px;\n}\n\n#tf-eventList i.fa {\n\tfont-size: 40px;\n\tborder: 4px solid #FCAC45;\n\twidth: 100px;\n\theight: 100px;\n\tpadding: 27px 25px;\n\tmargin-bottom: 10px;\n\tborder-radius: 50%;\n\ttransition: all 0.5s;\n}\n\n#tf-eventList i.fa.fa-mobile{\n\tfont-size: 50px;\n\tpadding: 20px 25px;\n}\n\n#tf-eventList .service:hover>i.fa{\n\tbackground: #FCAC45;\n\tcolor: #ffffff;\n}\n\n\n/* Dates */\n#tf-eventList .eventList-date { width: 170px; }\n#tf-eventList .eventList-date .dayofmonth {\n  width: 40px;\n  font-size: 36px;\n  line-height: 36px;\n  float: left;\n  text-align: right;\n  margin-right: 10px;\n}\n.eventList-date .shortdate {\n  font-size: 0.75em;\n}\n\n/* Times */\n.eventList-time { width: 140px; }\n\n/* Events */\n.eventList-events {  }\n.eventList.agenda-event {  }\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/sensor-eventlist/sensor-eventlist.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"tf-eventList\" >\n  <div class=\"overlay\">\n    <div class=\"container\">\n      <div class=\"section-title center text-center\">\n        <h2> <strong>EventList</strong></h2>\n        <div class=\"line\">\n          <hr>\n        </div>\n      </div>\n      <div class=\"table-responsive\">\n        <table class=\"table table-condensed\">\n          <thead>\n            <tr>\n              <th>Date</th>\n              <th>Time</th>\n              <th>Event</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let photonEvent of photonEventList\">\n              <td class=\"active eventList-date\" rowspan=\"1\">\n                <div class=\"dayofmonth\">{{photonEvent.data | date:'dd'}}</div>\n                <div class=\"dayofweek\">{{photonEvent.data | date:'EEEE'}}</div>\n                <div class=\"shortdate text-muted\">{{photonEvent.data | date:'MMM'}}, {{photonEvent.data | date:'yyyy'}}</div>\n              </td>\n              <td class=\"time\">\n                {{photonEvent.data | date:'shortTime'}}\n              </td>\n              <td class=\"Event\">\n                <div class=\"agenda-event\">\n                  {{photonEvent.type}}\n                </div>\n              </td>\n            </tr>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/sensor-eventlist/sensor-eventlist.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SensorEventlistComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__particleCloudService_service__ = __webpack_require__("../../../../../src/app/particleCloudService.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var SensorEventlistComponent = (function () {
+    function SensorEventlistComponent(particleCloudService) {
+        this.particleCloudService = particleCloudService;
+        this.photonEventList = [];
+    }
+    ;
+    SensorEventlistComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        var essObservable = this.particleCloudService.registerEventSourceListener('PressureAlarm');
+        essObservable.subscribe({
+            next: function (photonEvent) {
+                console.log(photonEvent);
+                _this.photonEventList.push(photonEvent);
+            }
+        });
+    };
+    return SensorEventlistComponent;
+}());
+SensorEventlistComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'sensor-eventlistComponent',
+        template: __webpack_require__("../../../../../src/app/sensor-eventlist/sensor-eventlist.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/sensor-eventlist/sensor-eventlist.component.css")],
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_1__particleCloudService_service__["a" /* ParticleCloudService */],
+        ]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__particleCloudService_service__["a" /* ParticleCloudService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__particleCloudService_service__["a" /* ParticleCloudService */]) === "function" && _a || Object])
+], SensorEventlistComponent);
+
+var _a;
+//# sourceMappingURL=sensor-eventlist.component.js.map
 
 /***/ }),
 

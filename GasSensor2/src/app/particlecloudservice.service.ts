@@ -35,6 +35,60 @@ export class ParticleCloudService {
     return pressure /100;
   }
 
+  pressureValueToAdc(pressure: number): number {
+    let adcValue: number;
+    // according to datasheet pressure sensor MPX5700 from NXP
+    // pressure = (adcValue/4095 -0.035)/0.0012858;
+    adcValue = (pressure*0.0012858*100 +0.035)*4095;
+
+    return adcValue;
+  }
+
+  // buzz miliseconds length
+  buzz(length: number): Promise<any> {
+    var mycommand: string = 'buzz';
+    var mymessage = new String(length);
+    var body = { args: mymessage };
+    var headers = new Headers();
+
+    headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
+    //headers.append('Content-type', 'application/json');
+
+    var myfullurl =
+      this.myparticlebaseUrl
+      + '/devices/' + this.photonid
+      + '/' + mycommand;
+
+    console.log(body);
+    return this.http.post(myfullurl, body, { headers: headers }).toPromise()
+      //return this.http.post(myfullurl,JSON.stringify(body)).toPromise()
+      .then(
+      response => response.json())
+      .catch(this.handleError);
+  }
+
+  setAlarm(level: number): Promise<any> {
+    var mycommand: string = 'setAlarm';
+    var mymessage = level.toString();
+    var body = { args: mymessage };
+    var headers = new Headers();
+    console.log(mymessage);
+    headers.append('Authorization', "Bearer d4ba726eea679aaa23d03dc3edba6ece90d4f9d0");
+    //headers.append('Content-type', 'application/json');
+
+    var myfullurl =
+      this.myparticlebaseUrl
+      + '/devices/' + this.photonid
+      + '/' + mycommand;
+
+    console.log(" particleCloudService.setAlarm " + body);
+    return this.http.post(myfullurl, body, { headers: headers }).toPromise()
+      //return this.http.post(myfullurl,JSON.stringify(body)).toPromise()
+      .then(
+      response => response.json())
+      .catch(this.handleError);
+  }
+
   // https://api.particle.io/v1/devices/260056001351353432393433/setMessage -d args="Nix" -d access_token=d4ba726eea679aaa23d03dc3edba6ece90d4f9d0
   sendText(mymessage: string): Promise<any> {
     var mycommand: string = 'setMessage';
@@ -60,7 +114,7 @@ export class ParticleCloudService {
   }
 
   readAnalogValue(): Observable<Object> {
-    return this.readIOValue('analog', null);
+    return this.readIOValue('pressure', null);
   }
 
   readDigitalValue(channel: number): Observable<Object> {

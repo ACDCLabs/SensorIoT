@@ -35,6 +35,9 @@ export class SensorDashboardComponent implements OnInit {
   private stopWatch: Date;
   private dataIsRecording: boolean = false;
   private serverIPAddress: string;
+  private messageToSend: string;
+  private pressureLimit: number;
+  private pressureLimitLine: number[][];
 
   constructor(private particleCloudService: ParticleCloudService,
     private backendCloudService: BackendCloudService,
@@ -45,7 +48,7 @@ export class SensorDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.pressureLimit = 1.2;
     this.particleCloudService.readAnalogValue()
       .subscribe((value) => {
         this.sensor.pressure = this.particleCloudService.adcValueToPressure(value["result"]);
@@ -55,8 +58,9 @@ export class SensorDashboardComponent implements OnInit {
       this.run.runnumber = num + 1;
     });
     this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
+    this.pressureLimitLine = this.createLimitArray();
     // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-    // setInterval(() => { this.createRandomData(); }, 1000);
+    setInterval(() => { this.createRandomData(); }, 1000);
     this.clockService.createStopWatch().subscribe(stopWatchMillis => this.stopWatch = new Date(stopWatchMillis));
     this.clockService.stopStopWatch();
     this.pollAnalogValues();
@@ -74,6 +78,7 @@ export class SensorDashboardComponent implements OnInit {
       this.backendCloudService.storeSensorValue(this.sensor, this.run.runnumber, this.run.rundescription).subscribe();
 
     if (this.pressureValues.length > this.maxArrayLength) this.pressureValues.shift();
+    this.pressureLimitLine = this.createLimitArray();
   };
 
   startRun(): boolean {
@@ -92,6 +97,28 @@ export class SensorDashboardComponent implements OnInit {
     return false;
   }
 
+  sendMessage(): boolean {
+    this.particleCloudService.sendText(this.messageToSend);
+    console.log("sending " + this.messageToSend);
+    return false;
+  }
+
+  beepDevice(): boolean {
+    let length = 1000; // duration in miliseconds
+    this.particleCloudService.buzz(length);
+    console.log("sending " + this.messageToSend);
+    return false;
+  }
+
+
+  pressureLimitChange(event): boolean {
+    let limit = this.particleCloudService.pressureValueToAdc(event); // limit in bar
+    this.particleCloudService.setAlarm(limit);
+    // console.log(event);
+    console.log(this.pressureLimit);
+    return false;
+  }
+
 
   pollAnalogValues(time = 2000) {
     return Observable.interval(time)
@@ -104,9 +131,20 @@ export class SensorDashboardComponent implements OnInit {
           this.backendCloudService.storeSensorValue(this.sensor, this.run.runnumber, this.run.rundescription).subscribe();
         if (this.pressureValues.length > this.maxArrayLength) this.pressureValues.shift();
         this.pressureValues = [...this.pressureValues, [this.sensor.time.valueOf(), this.sensor.pressure]];
+        this.pressureLimitLine = this.createLimitArray();
         // this.setValue(this.sensor.value);
         // console.log("values", this.pressureValues);
       });
+  }
+
+  createLimitArray(): number[][] {
+    let limitArray: number[][];
+    var values = this.pressureValues.map(function(elt) { return elt[0]; });
+    var max = Math.max.apply(null, values);
+    var min = Math.min.apply(null, values);
+    limitArray =[[min,this.pressureLimit],[max, this.pressureLimit]];
+    // console.log(limitArray);
+    return limitArray;
   }
 
 };

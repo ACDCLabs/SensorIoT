@@ -24,6 +24,8 @@ import { Run } from './models/run/run';
 import { SensorDescriptor } from './models/sensor-descriptor/sensor-descriptor';
 import { ClockService } from './clock.service';
 import { FormsModule }   from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SensorEventlistComponent } from './sensor-eventlist/sensor-eventlist.component';
 
 //import { SensorList } from './models/sensor-list/sensor-list';
 
@@ -42,7 +44,8 @@ import { FormsModule }   from '@angular/forms';
     HistoryChartComponent,
     Sensor,
     SensorDescriptor,
-    Run
+    Run,
+    SensorEventlistComponent
     // SensorList
   ],
   imports: [
@@ -53,7 +56,8 @@ import { FormsModule }   from '@angular/forms';
     NgxGaugeModule,
     ChartModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ModalModule.forRoot()
   ],
 
     providers: [

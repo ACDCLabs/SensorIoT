@@ -4,11 +4,12 @@ import { SensorChartComponent } from './sensor-chart/sensor-chart.component';
 import { TempGaugeCtrlComponent } from './charts/tempGaugeCtrl/tempGaugeCtrl.component';
 import { SensorDashboardComponent } from './sensor-dashboard/sensor-dashboard.component';
 import { SensorHistoryComponent } from './sensor-history/sensor-history.component';
+import { SensorEventlistComponent } from './sensor-eventlist/sensor-eventlist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: SensorDashboardComponent },
-  { path: 'gaugeCtrl', component: TempGaugeCtrlComponent },
+  { path: 'eventlist', component: SensorEventlistComponent },
   { path: 'chart', component: SensorChartComponent },
   { path: 'history', component: SensorHistoryComponent }
 ];

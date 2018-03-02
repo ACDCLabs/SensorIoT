@@ -11,6 +11,8 @@ import { DataPoint, SeriesOptions, ChartObject, Options } from 'highcharts';
 export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() historyChartData: number[][];
+  @Input() limit: number[][];
+
   private historyChartSeries: SeriesOptions;
 
 
@@ -23,14 +25,25 @@ export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
 
     // this.chart.ref.redraw();
     this.chart.ref.series[0].setData(this.historyChartData);
+    if (this.limit.length >0) {
+        this.chart.ref.series[1].setData(this.limit);
+    }
 
   }
   ngOnChanges(changes: SimpleChanges) {
     // console.log(this.historyChartData);
     // this.tempChartSeries.data = this.tempChartData;
     if (this.chart.ref) this.chart.ref.series[0].setData(this.historyChartData);
+    if (this.limit.length >0 && this.chart.ref) {
+        this.chart.ref.series[1].setData(this.limit);
+    }
+
     //this.showTemperatures(this.tempChartData);
 
+  }
+
+  private getChart(): Chart  {
+    return this.chart;
   }
 
   private chart = new Chart({
@@ -80,7 +93,8 @@ export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
     },
     colors: ["rgba(148,202,255,1.0)", "#94CAFF", "#FF7070"],
     series: [
-      { type: 'area', name: "Druck", color: "rgba(148,202,255,1.0)", data: [[], []] }
+      { type: 'area', name: "Druck", color: "rgba(148,202,255,1.0)", data: [[], []] },
+      { type: 'line', name: "Limit", color: "rgba(255,10,10,1.0)", data: [[], []] }
     ],
     xAxis: {
       type: 'datetime',
@@ -104,8 +118,8 @@ export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
       }
     },
     yAxis: {
-      max: 2,
-      min: 0.5,
+      max: 1.3,
+      min: 0.8,
       lineColor: "#808080",
       tickColor: "#ffffff",
       gridLineColor: "#808080",

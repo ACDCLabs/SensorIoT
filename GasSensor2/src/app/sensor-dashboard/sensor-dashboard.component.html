@@ -2,15 +2,39 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-4">
-        <div class="stopwatch">{{stopWatch | date:'mm:ss'}}</div>
-      </div>
-      <div class="col-md-8">
         <form>
           <div class="form-row">
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-5">
+              <label for="Message">Nachricht</label>
+              <input type="text" class="form-control" [(ngModel)]="messageToSend" name="messageToSend" id="messageToSend" placeholder="Nix">
+              <small id="messageToSendHelp" class="form-text text-muted">Text an Flasche senden</small>
+              <!-- {{runDescription}}-->
+            </div>
+            <div class="form-group col-md-2">
+              <button class="form-control stopwatchButton" (click)="sendMessage()">Send</button>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Message">Limit</label>
+              <input type="number" class="form-control" [(ngModel)]="pressureLimit" (ngModelChange)=pressureLimitChange($event) step = "0.01" name="pressureLimit" id="pressureLimit" >
+              <small id="pressureLimitHelp" class="form-text text-muted">Limit</small>
+              <!-- {{runDescription}}-->
+            </div>
+            <div class="form-group col-md-2">
+              <button class="form-control stopwatchButton" (click)="beepDevice()">Alarm</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2">
+        <div class="stopwatch">{{stopWatch | date:'mm:ss'}}</div>
+      </div>
+      <div class="col-md-6">
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-2">
               <button class="form-control stopwatchButton" (click)="startRun()">Start</button>
             </div>
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-2">
               <button class="form-control stopwatchButton" (click)="stopRun()">Stop</button>
             </div>
             <div class="form-group col-md-1">
@@ -25,7 +49,7 @@
               <a class="form-control"> {{run.runnumber}} </a>
               <small id="runNumberHelp" class="form-text text-muted">Nummer</small>
             </div>
-            <div class="form-group col-md-8">
+            <div class="form-group col-md-6">
               <label for="description">Beschreibung</label>
               <input type="text" class="form-control" [(ngModel)]="run.rundescription" name="runDescription" id="runDescription" placeholder="Testlauf">
               <small id="runDescriptionHelp" class="form-text text-muted">Kurze Beschreibung zu den aufgenommenen Daten.</small>
@@ -44,7 +68,7 @@
       <h3 class="text-center"> Flaschendruck </h3>
     </div>
     <div class="col-md-8">
-      <app-history-chart [historyChartData]="pressureValues"> </app-history-chart>
+      <app-history-chart [historyChartData]="pressureValues" [limit]="pressureLimitLine"> </app-history-chart>
     </div>
   </div>
 </div>
