@@ -1416,7 +1416,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"./assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <a class=\"nav-link\" routerLink=\"/eventlist\" routerLinkActive=\"active\"> Eventlist </a>\n    <!-- a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a-->\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-toggleable-md navbar-light bg-faded\">\n  <a class=\"navbar-brand\" href=\"#\"> <img src=\"/assets/img/IFGS_Logo_black_small.png\" >  </a>\n  <div class=\"navbar\">\n    <a class=\"nav-link\" routerLink=\"/dashboard\" routerLinkActive=\"active\"> Dashboard </a>\n    <a class=\"nav-link\" routerLink=\"/eventlist\" routerLinkActive=\"active\"> Eventlist </a>\n    <!-- a class=\"nav-link\" routerLink=\"/chart\" routerLinkActive=\"active\"> Chart </a-->\n    <!--a class=\"nav-link\" routerLink=\"/temp-display\" routerLinkActive=\"active\"> TempDisplay </a-->\n    <a class=\"nav-link\" routerLink=\"/history\" routerLinkActive=\"active\"> History </a>\n  </div>\n</nav>\n"
 
 /***/ }),
 
