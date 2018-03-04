@@ -600,19 +600,25 @@ var HistoryChartComponent = (function () {
     HistoryChartComponent.prototype.ngAfterViewInit = function () {
         // this.chart.ref.redraw();
         this.chart.ref.series[0].setData(this.historyChartData);
-        if (this.limit.length > 0) {
-            this.chart.ref.series[1].setData(this.limit);
+        if (this.limit) {
+            if (this.limit.length > 0) {
+                this.chart.ref.series[1].setData(this.limit);
+            }
         }
+        //console.log(this.limit);
     };
     HistoryChartComponent.prototype.ngOnChanges = function (changes) {
         // console.log(this.historyChartData);
         // this.tempChartSeries.data = this.tempChartData;
         if (this.chart.ref)
             this.chart.ref.series[0].setData(this.historyChartData);
-        if (this.limit.length > 0 && this.chart.ref) {
-            this.chart.ref.series[1].setData(this.limit);
+        if (this.limit) {
+            if (this.limit.length > 0 && this.chart.ref) {
+                this.chart.ref.series[1].setData(this.limit);
+            }
         }
         //this.showTemperatures(this.tempChartData);
+        //console.log(this.limit);
     };
     HistoryChartComponent.prototype.getChart = function () {
         return this.chart;
@@ -1744,7 +1750,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-dashboard/sensor-dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c;\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-5\">\n              <label for=\"Message\">Nachricht</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"messageToSend\" name=\"messageToSend\" id=\"messageToSend\" placeholder=\"Nix\">\n              <small id=\"messageToSendHelp\" class=\"form-text text-muted\">Text an Flasche senden</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"sendMessage()\">Send</button>\n            </div>\n            <div class=\"form-group col-md-3\">\n              <label for=\"Message\">Limit</label>\n              <input type=\"number\" class=\"form-control\" [(ngModel)]=\"pressureLimit\" (ngModelChange)=pressureLimitChange($event) step = \"0.01\" name=\"pressureLimit\" id=\"pressureLimit\" >\n              <small id=\"pressureLimitHelp\" class=\"form-text text-muted\">Limit</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"beepDevice()\">Alarm</button>\n            </div>\n          </div>\n        </form>\n      </div>\n      <div class=\"col-md-2\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-6\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-6\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.rundescription\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.2-2'\"> </tempGauge>\n      <h3 class=\"text-center\"> Flaschendruck </h3>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\" [limit]=\"pressureLimitLine\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <p> Remote Server IP Address: {{serverIPAddress}} </p>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"jumbotron\" style=\"background:#2c2c2c;\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-md-4\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-5\">\n              <label for=\"Message\">Nachricht</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"messageToSend\" name=\"messageToSend\" id=\"messageToSend\" placeholder=\"Nix\">\n              <small id=\"messageToSendHelp\" class=\"form-text text-muted\">Text an Flasche senden</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"sendMessage()\">Send</button>\n            </div>\n            <div class=\"form-group col-md-3\">\n              <label for=\"Message\">Limit</label>\n              <input type=\"number\" class=\"form-control\" [(ngModel)]=\"pressureLimit\" (ngModelChange)=pressureLimitChange($event) step = \"0.01\" name=\"pressureLimit\" id=\"pressureLimit\" >\n              <small id=\"pressureLimitHelp\" class=\"form-text text-muted\">Limit</small>\n              <!-- {{runDescription}}-->\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"beepDevice()\">Alarm</button>\n            </div>\n          </div>\n        </form>\n      </div>\n      <div class=\"col-md-2\">\n        <div class=\"stopwatch\">{{stopWatch | date:'mm:ss'}}</div>\n      </div>\n      <div class=\"col-md-6\">\n        <form>\n          <div class=\"form-row\">\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"startRun()\">Start</button>\n            </div>\n            <div class=\"form-group col-md-2\">\n              <button class=\"form-control stopwatchButton\" (click)=\"stopRun()\">Stop</button>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <div class=\"recodingIconPaused\">\n                <div [ngClass]=\"{'recodingIconRec': dataIsRecording }\">\n                  <i class=\"fa fa-cloud-upload\"> </i>\n                </div>\n              </div>\n            </div>\n            <div class=\"form-group col-md-1\">\n              <label for=\"runNumber\">Run</label>\n              <a class=\"form-control\"> {{run.runnumber}} </a>\n              <small id=\"runNumberHelp\" class=\"form-text text-muted\">Nummer</small>\n            </div>\n            <div class=\"form-group col-md-6\">\n              <label for=\"description\">Beschreibung</label>\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"run.rundescription\" name=\"runDescription\" id=\"runDescription\" placeholder=\"Testlauf\">\n              <small id=\"runDescriptionHelp\" class=\"form-text text-muted\">Kurze Beschreibung zu den aufgenommenen Daten.</small>\n              <!-- {{runDescription}}-->\n            </div>\n          </div>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <tempGauge [gaugeTemp]=\"sensor.pressure | number: '2.2-2'\"> </tempGauge>\n      <h3 class=\"text-center\"> Flaschendruck </h3>\n    </div>\n    <div class=\"col-md-8\">\n      <app-history-chart [historyChartData]=\"pressureValues\" [limit]=\"pressureLimitLine\"> </app-history-chart>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-4\">\n      <p> Remote Server IP Address: {{serverIPAddress}} </p>\n    </div>\n  </div>\n</div>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-12\">\n    <sensor-eventlistComponent> </sensor-eventlistComponent>\n  </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1794,7 +1800,7 @@ var SensorDashboardComponent = (function () {
     }
     SensorDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.pressureLimit = 1.2;
+        this.pressureLimit = 1.02;
         this.particleCloudService.readAnalogValue()
             .subscribe(function (value) {
             _this.sensor.pressure = _this.particleCloudService.adcValueToPressure(value["result"]);
@@ -1805,7 +1811,7 @@ var SensorDashboardComponent = (function () {
         this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
         this.pressureLimitLine = this.createLimitArray();
         // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-        setInterval(function () { _this.createRandomData(); }, 1000);
+        // setInterval(() => { this.createRandomData(); }, 1000);
         this.clockService.createStopWatch().subscribe(function (stopWatchMillis) { return _this.stopWatch = new Date(stopWatchMillis); });
         this.clockService.stopStopWatch();
         this.pollAnalogValues();
@@ -2005,7 +2011,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/sensor-history/sensor-history.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <h3> Augewählter run : {{run.runnumber}} </h3>\n      <app-history-chart [historyChartData]=\"tempHistory\"> </app-history-chart>\n    </div>\n    <div class=\"col-md-3\">\n        <h3> Runlist </h3>\n      <table class=\"table table-sm my-selector-table\">\n        <thead align=\"center\">\n          <tr>\n            <th>num</th>\n            <th>name</th>\n            <th>kill</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let run of runs\">\n            <td (click)=\"onClickRunNum(run.runnumber)\">\n              {{run.runnumber}}\n            </td>\n            <td (click)=\"onClickRunNum(run.runnumber)\">\n              {{run.rundescription}}\n            </td>\n            <td>\n              <i class=\"fa fa-trash\" (click)=\"onClickDelete(run.runnumber)\"> </i>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n<abbr></abbr>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <h3> Run statistiken </h3>\n    </div>\n  </div>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n\n  </div>\n</div>\n<!--\n  <div class=\"row\">\n    <div class=\"col-md-1\">\n    </div>\n    <div class=\"col-md-9\">\n      <p>Range: {{startDate}} - {{endDate}}</p>\n    </div>\n    <div class=\"col-md-1\">\n    </div>\n  </div>\n</div>\n-->\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <h3> Augewählter run : {{run.runnumber}} </h3>\n      <app-history-chart [historyChartData]=\"tempHistory\" [limit]=\"pressureLimitLine\"> </app-history-chart>\n    </div>\n    <div class=\"col-md-3\">\n        <h3> Runlist </h3>\n      <table class=\"table table-sm my-selector-table\">\n        <thead align=\"center\">\n          <tr>\n            <th>num</th>\n            <th>name</th>\n            <th>kill</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let run of runs\">\n            <td (click)=\"onClickRunNum(run.runnumber)\">\n              {{run.runnumber}}\n            </td>\n            <td (click)=\"onClickRunNum(run.runnumber)\">\n              {{run.rundescription}}\n            </td>\n            <td>\n              <i class=\"fa fa-trash\" (click)=\"onClickDelete(run.runnumber)\"> </i>\n            </td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n  </div>\n</div>\n<abbr></abbr>\n<div class=\"container-fluid\">\n  <div class=\"row\">\n    <div class=\"col-md-9\">\n      <h3> Run statistiken </h3>\n    </div>\n  </div>\n</div>\n<div class=\"container\">\n  <div class=\"row\">\n\n  </div>\n</div>\n<!--\n  <div class=\"row\">\n    <div class=\"col-md-1\">\n    </div>\n    <div class=\"col-md-9\">\n      <p>Range: {{startDate}} - {{endDate}}</p>\n    </div>\n    <div class=\"col-md-1\">\n    </div>\n  </div>\n</div>\n-->\n"
 
 /***/ }),
 
@@ -2049,6 +2055,8 @@ var SensorHistoryComponent = (function () {
         this.startDate = new Date(today - backInMillis);
         this.endDate = new Date();
         // console.log(this.startDate);
+        //dirty workaround
+        this.pressureLimitLine = [[this.startDate.valueOf(), 0], [this.endDate.valueOf(), 0]];
         this.backendCloudService.getRunList().subscribe(function (data) {
             _this.runs = data;
             // console.log(this.runs);
@@ -2082,7 +2090,12 @@ var SensorHistoryComponent = (function () {
         });
     };
     SensorHistoryComponent.prototype.buildChartArray = function (sensorData) {
-        return sensorData.map(function (data) { return [new Date(data['time']).valueOf(), data['pressure']]; });
+        //dirty workaround
+        var values = sensorData.map(function (elt) { return elt['time']; });
+        this.pressureLimitLine = [[Math.min.apply(null, values), 0], [Math.min.apply(null, values), 0]];
+        return sensorData.map(function (data) {
+            return [new Date(data['time']).valueOf(), data['pressure']];
+        });
     };
     SensorHistoryComponent.prototype.clacRunStatistics = function () {
     };
