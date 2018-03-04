@@ -48,7 +48,7 @@ export class SensorDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pressureLimit = 1.2;
+    this.pressureLimit = 1.02;
     this.particleCloudService.readAnalogValue()
       .subscribe((value) => {
         this.sensor.pressure = this.particleCloudService.adcValueToPressure(value["result"]);
@@ -60,7 +60,7 @@ export class SensorDashboardComponent implements OnInit {
     this.pressureValues = [[new Date().valueOf(), this.sensor.pressure]];
     this.pressureLimitLine = this.createLimitArray();
     // console.log("dashboardComponent.ngOninit: " + this.temperatureCurve);
-    setInterval(() => { this.createRandomData(); }, 1000);
+    // setInterval(() => { this.createRandomData(); }, 1000);
     this.clockService.createStopWatch().subscribe(stopWatchMillis => this.stopWatch = new Date(stopWatchMillis));
     this.clockService.stopStopWatch();
     this.pollAnalogValues();

@@ -25,6 +25,7 @@ export class SensorHistoryComponent implements OnInit {
   private sensor: Sensor;
   private sensors: Sensor[] = [];
   private sensorList = SensorList;
+  private pressureLimitLine: number[][];
 
   constructor(private backendCloudService: BackendCloudService) {
     this.run = new Run;
@@ -43,6 +44,8 @@ export class SensorHistoryComponent implements OnInit {
     this.startDate = new Date(today - backInMillis);
     this.endDate = new Date();
     // console.log(this.startDate);
+    //dirty workaround
+    this.pressureLimitLine=[[this.startDate.valueOf(),0],[this.endDate.valueOf(),0]];
     this.backendCloudService.getRunList().subscribe((data) => {
       this.runs = data;
       // console.log(this.runs);
@@ -80,7 +83,12 @@ export class SensorHistoryComponent implements OnInit {
   }
 
   private buildChartArray(sensorData: Sensor[]): Array<any> {
-    return sensorData.map((data) => { return [new Date(data['time']).valueOf(), data['pressure']]; });
+    //dirty workaround
+    var values = sensorData.map(function(elt) { return elt['time']; });
+    this.pressureLimitLine=[[Math.min.apply(null, values),0],[Math.min.apply(null, values),0]];
+    return sensorData.map((data) => {
+      return [new Date(data['time']).valueOf(), data['pressure']];
+    });
   }
 
   private clacRunStatistics(): void {

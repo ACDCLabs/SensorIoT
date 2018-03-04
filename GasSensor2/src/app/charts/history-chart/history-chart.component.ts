@@ -25,24 +25,27 @@ export class HistoryChartComponent implements OnInit, AfterViewInit, OnChanges {
 
     // this.chart.ref.redraw();
     this.chart.ref.series[0].setData(this.historyChartData);
-    if (this.limit.length >0) {
+    if (this.limit) {
+      if (this.limit.length > 0) {
         this.chart.ref.series[1].setData(this.limit);
+      }
     }
-
+    //console.log(this.limit);
   }
   ngOnChanges(changes: SimpleChanges) {
     // console.log(this.historyChartData);
     // this.tempChartSeries.data = this.tempChartData;
     if (this.chart.ref) this.chart.ref.series[0].setData(this.historyChartData);
-    if (this.limit.length >0 && this.chart.ref) {
+    if (this.limit) {
+      if (this.limit.length > 0 && this.chart.ref) {
         this.chart.ref.series[1].setData(this.limit);
+      }
     }
-
     //this.showTemperatures(this.tempChartData);
-
+  //console.log(this.limit);
   }
 
-  private getChart(): Chart  {
+  private getChart(): Chart {
     return this.chart;
   }
 
