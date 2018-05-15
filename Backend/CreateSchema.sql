@@ -1,6 +1,6 @@
 drop Schema if exists LindeSensorData;
 Create Database if NOT EXISTS  LindeSensorData;
-
+Create USER if not exists acdc identified by 'acdc';
 Grant ALL on LindeSensorData.* to acdc@localhost;
 Grant ALL on LindeSensorData.* to acdc;
 
